@@ -55,6 +55,10 @@ public class BaseSwipeListViewListener implements SwipeListViewListener {
     }
 
     @Override
+    public void onEventTriggered(int position, int direction) {
+    }
+
+    @Override
     public void onFirstListItem() {
     }
 

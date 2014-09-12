@@ -89,9 +89,14 @@ public class SwipeListView extends ListView {
     public final static int SWIPE_ACTION_CHOICE = 2;
 
     /**
+     * An event is triggered when the swipe has been released
+     */
+    public final static int SWIPE_ACTION_EVENT = 3;
+
+    /**
      * No action when swiped
      */
-    public final static int SWIPE_ACTION_NONE = 3;
+    public final static int SWIPE_ACTION_NONE = 4;
 
     /**
      * Default ids for front view
@@ -472,6 +477,15 @@ public class SwipeListView extends ListView {
     protected void onChoiceEnded() {
         if (swipeListViewListener != null) {
             swipeListViewListener.onChoiceEnded();
+        }
+    }
+
+    /**
+     * Event is triggered
+     */
+    protected void onEventTriggered(int position, int direction) {
+        if (swipeListViewListener != null) {
+            swipeListViewListener.onEventTriggered(position, direction);
         }
     }
 

@@ -108,6 +108,11 @@ public interface SwipeListViewListener {
     void onChoiceEnded();
 
     /**
+     * Time to fire and event
+     */
+    void onEventTriggered(int position, int direction);
+
+    /**
      * User is in first item of list
      */
     void onFirstListItem();

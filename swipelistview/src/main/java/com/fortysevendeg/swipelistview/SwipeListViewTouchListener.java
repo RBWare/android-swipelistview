@@ -377,6 +377,17 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
         reloadChoiceStateInView(frontView, position);
     }
 
+    private void updateEventState(int position) {
+
+        if (swipeCurrentAction == SwipeListView.SWIPE_ACTION_EVENT) {
+            closeOpenedItems();
+            setActionsTo(SwipeListView.SWIPE_ACTION_EVENT);
+
+            int direction = !swipingRight ? 1 : 0;
+            swipeListView.onEventTriggered(position, direction);
+        }
+    }
+
     /**
      * Unselected choice state in item
      */
@@ -534,6 +545,9 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
         if (swipeCurrentAction == SwipeListView.SWIPE_ACTION_CHOICE) {
             generateChoiceAnimate(view, position);
         }
+        if (swipeCurrentAction == SwipeListView.SWIPE_ACTION_EVENT) {
+            generateEventAnimate(view, position);
+        }
     }
 
     /**
@@ -554,6 +568,27 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
                     }
                 });
     }
+
+    /**
+     * Create event animation
+     *
+     * @param view     affected view
+     * @param position list position
+     */
+    private void generateEventAnimate(final View view, final int position) {
+        animate(view)
+                .translationX(0)
+                .setDuration(animationTime)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        swipeListView.resetScrolling();
+                        resetCell();
+                    }
+                });
+    }
+
+
 
     /**
      * Create dismiss animation
@@ -843,6 +878,10 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
                     swapChoiceState(downPosition);
                 }
 
+                if (swipeCurrentAction == SwipeListView.SWIPE_ACTION_EVENT) {
+                    updateEventState(downPosition);
+                }
+
                 velocityTracker.recycle();
                 velocityTracker = null;
                 downX = 0;
@@ -909,6 +948,10 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
                             swipeCurrentAction = SwipeListView.SWIPE_ACTION_CHOICE;
                         } else if (!swipingRight && swipeActionLeft == SwipeListView.SWIPE_ACTION_CHOICE) {
                             swipeCurrentAction = SwipeListView.SWIPE_ACTION_CHOICE;
+                        } else if (swipingRight && swipeActionRight == SwipeListView.SWIPE_ACTION_EVENT) {
+                            swipeCurrentAction = SwipeListView.SWIPE_ACTION_EVENT;
+                        } else if (!swipingRight && swipeActionLeft == SwipeListView.SWIPE_ACTION_EVENT) {
+                            swipeCurrentAction = SwipeListView.SWIPE_ACTION_EVENT;
                         } else {
                             swipeCurrentAction = SwipeListView.SWIPE_ACTION_REVEAL;
                         }
