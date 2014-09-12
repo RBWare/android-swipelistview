@@ -9,6 +9,7 @@
 *.class
 
 # generated files
+swipelistview/build/*
 build/*
 libs/*/build/*
 libs/*/gen/*
@@ -40,5 +41,4 @@ gradle.properties
 # Other unneeded files
 .DS_Store
 
-# Integration tests
-CI\ Tests/target/*
+local.properties
