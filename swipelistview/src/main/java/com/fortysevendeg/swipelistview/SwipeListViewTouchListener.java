@@ -54,6 +54,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
     private static final int DISPLACE_CHOICE = 80;
 
     private int swipeMode = SwipeListView.SWIPE_MODE_BOTH;
+    private boolean swipeEnabledForLongPress = true;
     private boolean swipeOpenOnLongPress = true;
     private boolean swipeClosesAllItemsWhenListMoves = true;
 
@@ -222,6 +223,23 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
      */
     public void setSwipeClosesAllItemsWhenListMoves(boolean swipeClosesAllItemsWhenListMoves) {
         this.swipeClosesAllItemsWhenListMoves = swipeClosesAllItemsWhenListMoves;
+    }
+
+    /**
+     * Get if the long press works at all
+     *
+     */
+    public boolean getSwipeEnabledForLongPress() {
+        return this.swipeEnabledForLongPress;
+    }
+
+    /**
+     * Set if the long press works at all
+     *
+     * @param swipeEnabledForLongPress
+     */
+    public void setSwipeEnabledForLongPress(boolean swipeEnabledForLongPress) {
+        this.swipeEnabledForLongPress = swipeEnabledForLongPress;
     }
 
     /**
@@ -819,7 +837,12 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
                         downPosition = childPosition;
 
                         frontView.setClickable(!opened.get(downPosition));
-                        frontView.setLongClickable(!opened.get(downPosition));
+                        if (swipeEnabledForLongPress)
+                            frontView.setLongClickable(!opened.get(downPosition));
+                        else {
+                            frontView.setLongClickable(false);
+                            frontView.setOnLongClickListener(null);
+                        }
 
                         velocityTracker = VelocityTracker.obtain();
                         velocityTracker.addMovement(motionEvent);

@@ -182,6 +182,7 @@ public class SwipeListView extends ListView {
 
         int swipeMode = SWIPE_MODE_BOTH;
         boolean swipeOpenOnLongPress = true;
+        boolean swipeEnabledForLongPress = true;
         boolean swipeCloseAllItemsWhenMoveList = true;
         long swipeAnimationTime = 0;
         float swipeOffsetLeft = 0;
@@ -199,6 +200,7 @@ public class SwipeListView extends ListView {
             swipeActionRight = styled.getInt(R.styleable.SwipeListView_swipeActionRight, SWIPE_ACTION_REVEAL);
             swipeOffsetLeft = styled.getDimension(R.styleable.SwipeListView_swipeOffsetLeft, 0);
             swipeOffsetRight = styled.getDimension(R.styleable.SwipeListView_swipeOffsetRight, 0);
+            swipeEnabledForLongPress = styled.getBoolean(R.styleable.SwipeListView_swipeEnabledForLongPress, true);
             swipeOpenOnLongPress = styled.getBoolean(R.styleable.SwipeListView_swipeOpenOnLongPress, true);
             swipeAnimationTime = styled.getInteger(R.styleable.SwipeListView_swipeAnimationTime, 0);
             swipeCloseAllItemsWhenMoveList = styled.getBoolean(R.styleable.SwipeListView_swipeCloseAllItemsWhenMoveList, true);
@@ -230,6 +232,7 @@ public class SwipeListView extends ListView {
         touchListener.setSwipeActionRight(swipeActionRight);
         touchListener.setSwipeMode(swipeMode);
         touchListener.setSwipeClosesAllItemsWhenListMoves(swipeCloseAllItemsWhenMoveList);
+        touchListener.setSwipeEnabledForLongPress(swipeEnabledForLongPress);
         touchListener.setSwipeOpenOnLongPress(swipeOpenOnLongPress);
         touchListener.setSwipeDrawableChecked(swipeDrawableChecked);
         touchListener.setSwipeDrawableUnchecked(swipeDrawableUnchecked);
